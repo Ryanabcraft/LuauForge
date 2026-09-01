@@ -1,4 +1,5 @@
 export const TOOLS = [
+  { id:'pastefy', name:'Pastefy Publisher', desc:'Publique Lua no pastefy.app via API e gere raw URL para loadstring.', category:'Loaders', tags:'pastefy publish paste api raw loadstring' },
   { id:'loadstring', name:'Loadstring Generator', desc:'Gere loaders HttpGet com pcall, retry e fallback multi-URL.', category:'Loaders', tags:'loadstring loader httpget' },
   { id:'formatter', name:'Lua Formatter', desc:'Indenta e organiza Lua/Luau preservando strings e comentários.', category:'Code', tags:'formatter format lua luau' },
   { id:'minifier', name:'Minifier', desc:'Compacta Lua/Luau: remove comentários, espaços e linhas vazias.', category:'Code', tags:'minifier minify compress' },

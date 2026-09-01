@@ -20,7 +20,11 @@ export function renderLoadstring(container){
       <div class="panel__body stack">
         <div class="field">
           <label>Primary URL</label>
-          <input id="lsUrl" class="input input--mono" placeholder="https://pastefy.app/abc/raw"/>
+          <div class="row" style="align-items:stretch">
+            <input id="lsUrl" class="input input--mono" placeholder="https://pastefy.app/abc/raw" style="flex:1"/>
+            <a class="btn btn--sm" href="#/pastefy" style="white-space:nowrap">Publicar no Pastefy →</a>
+          </div>
+          <span class="small muted" id="lsPastefyHint" style="display:none"></span>
         </div>
         <div class="field">
           <label>Fallback URLs (uma por linha)</label>
@@ -127,7 +131,11 @@ export function renderLoadstring(container){
   });
   // expose for global copy shortcut
   container._getOutput = ()=> outEl.textContent||'';
-  // initial
-  urlEl.value = 'https://pastefy.app/abc/raw';
+  // initial — pull last pastefy raw if exists
+  try{
+    const last = localStorage.getItem('lf:last_pastefy_raw');
+    if(last) { urlEl.value = last; const hint=$('#lsPastefyHint'); if(hint){ hint.textContent='Último Pastefy: '+last; hint.style.display='block'; } }
+    else urlEl.value = 'https://pastefy.app/abc/raw';
+  }catch{ urlEl.value = 'https://pastefy.app/abc/raw'; }
   render();
 }

@@ -2,6 +2,7 @@ import { TOOLS, TOOL_MAP } from './tools/registry.js';
 import { Store } from './storage.js';
 import { getRoute, navigate, onRouteChange, markRecent } from './router.js';
 import { toast, copyText, openModal, closeModal, bindModals } from './ui.js';
+import { renderPastefy } from './tools/pastefy.js';
 import { renderLoadstring } from './tools/loadstring.js';
 import { renderFormatter } from './tools/formatter.js';
 import { renderMinifier } from './tools/minifier.js';
@@ -19,6 +20,7 @@ const globalSearch = document.getElementById('globalSearch');
 const NAV = [
   { group:'Main', items:[
     {id:'dashboard', label:'Dashboard', icon:'◈'},
+    {id:'pastefy', label:'Pastefy Publisher', icon:'⤴'},
     {id:'loadstring', label:'Loadstring Generator', icon:'⧉'},
   ]},
   { group:'Code', items:[
@@ -284,6 +286,7 @@ function mountTool(id, renderer, title, subtitle){
 const ROUTES = {
   dashboard: ()=> viewDashboard(),
   settings: ()=> viewSettings(),
+  pastefy: ()=> mountTool('pastefy', renderPastefy, 'Pastefy Publisher','Publique no pastefy.app e copie o raw para loadstring.'),
   loadstring: ()=> mountTool('loadstring', renderLoadstring, 'Loadstring Generator','Gere loaders com pcall, retry e fallback.'),
   formatter: ()=> mountTool('formatter', renderFormatter, 'Lua Formatter','Indenta e formata Lua/Luau.'),
   minifier: ()=> mountTool('minifier', renderMinifier, 'Minifier','Comprima seu código.'),
