@@ -11,20 +11,21 @@
 @media (max-width: 860px){
   .sidebar{transform:translateX(-100%);transition:transform var(--duration-base) var(--ease-out);box-shadow:var(--shadow-modal)}
   .sidebar.open{transform:translateX(0)}
-  .main{margin-left:0}
+  .main{margin-left:0;max-width:100vw}
   .hamburger{display:grid}
-  .content{padding:18px}
-  .grid--2,.grid--3,.grid--4,.grid--hero{grid-template-columns:1fr}
+  .content{padding:18px;overflow-x:clip}
+  .grid--2,.grid--3,.grid--4,.grid--hero{grid-template-columns:minmax(0,1fr) !important}
   .kv{grid-template-columns:1fr;gap:4px}
-  .topbar{padding:0 14px;gap:10px;height:60px}
+  .topbar{padding:0 14px;gap:10px;height:60px;flex-wrap:nowrap}
   .topbar__sub{display:none}
   .hero h1{font-size:28px}
   .hero__inner{padding:20px}
   .stats{grid-template-columns:repeat(3,1fr)}
   .tool-head{flex-direction:column;align-items:stretch}
   .panel__head{flex-direction:column;align-items:stretch}
-  .panel__head .row{width:100%}
-  .panel__head .row .btn{flex:1}
+  .panel__head .row{width:100%;min-width:0}
+  .panel__head .row .btn{flex:1;min-width:0}
+  .output pre{max-width:100%;word-break:break-word;white-space:pre-wrap}
 }
 
 /* ≤560 — compact */
@@ -32,22 +33,24 @@
   .content{padding:14px}
   .stats{grid-template-columns:1fr 1fr}
   .stats .stat:last-child{grid-column:1 / -1}
-  .row{flex-direction:column;align-items:stretch}
-  .row .btn{width:100%;justify-content:center}
+  .row{flex-direction:column;align-items:stretch;min-width:0}
+  .row .btn{width:100%;justify-content:center;min-width:0}
   .field{min-width:0}
   .hero h1{font-size:26px;line-height:.95}
   .hero p{font-size:13px}
-  .topbar{padding:0 12px}
+  .topbar{padding:0 12px;gap:8px}
   .topbar__title{font-size:13px}
-  .topbar__actions{gap:6px}
-  .topbar__actions .btn--sm{padding:0 10px;font-size:12px}
-  .tabs{width:100%;overflow:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
+  .topbar__actions{gap:6px;flex-wrap:nowrap}
+  .topbar__actions .btn--sm{padding:0 10px;font-size:12px;min-height:36px}
+  .tabs{width:100%;overflow:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
   .tabs .tab{flex-shrink:0}
   .card__head{flex-direction:column;align-items:stretch;gap:8px}
   .card__head input{max-width:none !important;width:100%}
   .toasts{right:12px;left:12px;bottom:12px;max-width:none}
   .toast{min-width:0;width:100%}
   .modal{padding:12px}
+  .input, .select, .textarea{font-size:16px} /* evita zoom iOS */
 }
 
 /* ≤375 — ensure no overflow */

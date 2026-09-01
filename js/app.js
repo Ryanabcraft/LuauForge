@@ -219,7 +219,7 @@ function viewSettings(){
   app.innerHTML=`
   <div class="grid grid--2">
     <div class="panel"><div class="panel__head"><span class="card__title">Aparência</span><span class="badge" style="margin-left:auto">claro / escuro</span></div><div class="panel__body stack">
-      <label class="field"><span>Tema</span><select id="setTheme" class="select"><option value="light">Claro</option><option value="dark">Escuro</option><option value="darker">Escuro+</option></select></label>
+      <label class="field"><span>Tema</span><select id="setTheme" class="select"><option value="light">Claro (Branco)</option><option value="dark">Escuro</option><option value="darker">Escuro+ (Preto)</option></select></label>
       <label class="field"><span>Cor de destaque</span><select id="setAccent" class="select"><option value="forge">Forge (laranja)</option><option value="blue">Blue</option><option value="green">Green</option><option value="red">Red</option><option value="purple">Purple</option></select></label>
       <label class="field"><span>Tamanho da fonte (editor)</span><input id="setFont" type="range" min="11" max="18" value="${s.fontSize}" class="range"/><span class="small muted" id="setFontVal">${s.fontSize}px</span></label>
       <label class="field"><span>Tab size</span><select id="setTab" class="select"><option value="2">2 espaços</option><option value="4">4 espaços</option></select></label>
