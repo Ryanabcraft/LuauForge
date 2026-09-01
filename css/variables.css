@@ -32,3 +32,19 @@
 [data-accent="green"]{ --accent:#10B981; --accent2:#06B6D4; --accent-gradient: linear-gradient(135deg,#10B981 0%,#06B6D4 100%);}
 [data-accent="red"]{ --accent:#EF4444; --accent2:#F97316; --accent-gradient: linear-gradient(135deg,#EF4444 0%,#F97316 100%);}
 [data-theme="darker"]{ --bg:#05070A; --bg2:#0A0D14; --card:#10141E; --border:#1E2535; }
+[data-theme="light"]{
+  --bg:#F2F3F7;
+  --bg2:#FFFFFF;
+  --card:#FFFFFF;
+  --card-hover:#F8F9FC;
+  --border:#E2E6EF;
+  --border2:#D4DAE8;
+  --text:#0F172A;
+  --text2:#64748B;
+  --text3:#94A3B8;
+  --shadow-card: 0 1px 2px rgba(15,23,42,.06), 0 8px 24px rgba(15,23,42,.08);
+}
+[data-theme="light"] .topbar{ background:rgba(255,255,255,.82); backdrop-filter:blur(14px) saturate(1.2); }
+[data-theme="light"] ::-webkit-scrollbar-track{ background:var(--bg); }
+[data-theme="light"] ::-webkit-scrollbar-thumb{ background:#CBD5E1; }
+[data-theme="light"] ::selection{ background:rgba(108,99,255,.18); }

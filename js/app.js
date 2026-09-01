@@ -213,14 +213,14 @@ function viewSettings(){
   app.innerHTML=`
   <div class="grid grid--2">
     <div class="panel"><div class="panel__head"><span class="card__title">Appearance</span></div><div class="panel__body stack">
-      <label class="field"><span>Theme</span><select id="setTheme" class="select"><option value="dark">Dark</option><option value="darker">Darker</option><option value="system">System</option></select></label>
+      <label class="field"><span>Theme</span><select id="setTheme" class="select"><option value="dark">Dark</option><option value="darker">Darker</option><option value="light">Light</option></select></label>
       <label class="field"><span>Accent</span><select id="setAccent" class="select"><option value="purple">Purple</option><option value="blue">Blue</option><option value="green">Green</option><option value="red">Red</option></select></label>
       <label class="field"><span>Editor font size</span><input id="setFont" type="range" min="11" max="18" value="${s.fontSize}" class="range"/><span class="small muted" id="setFontVal">${s.fontSize}px</span></label>
       <label class="field"><span>Tab size</span><select id="setTab" class="select"><option value="2">2</option><option value="4">4</option></select></label>
       <div class="row"><button class="btn btn--primary" id="setSave">Save</button><button class="btn btn--sm" id="setReset">Reset</button></div>
     </div></div>
     <div class="panel"><div class="panel__head"><span class="card__title">Info</span></div><div class="panel__body stack">
-      <div class="notice">All code processing is done locally in your browser. Favoritos e recentes também ficam no seu dispositivo.</div>
+      <div class="notice">Tema e preferências ficam salvos no seu navegador. Use o botão 🌙/☀️ na topbar para alternar rápido.</div>
       <div class="card card__pad"><div style="font:700 12px var(--font-sans)">Storage</div><div class="small muted" id="storageInfo" style="margin-top:6px"></div><div class="row" style="margin-top:10px"><button class="btn btn--sm" id="clearFavs">Clear favorites</button><button class="btn btn--sm" id="clearRecent">Clear recent</button></div></div>
     </div></div>
   </div>`;
@@ -244,9 +244,15 @@ function viewSettings(){
 }
 
 function applySettings(s){
+  const theme = s.theme === 'system' ? (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark') : s.theme;
   document.documentElement.setAttribute('data-accent', s.accent);
-  document.documentElement.setAttribute('data-theme', s.theme);
+  document.documentElement.setAttribute('data-theme', theme);
   document.documentElement.style.setProperty('--editor-font', s.fontSize+'px');
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute('content', theme === 'light' ? '#FFFFFF' : '#080A0F');
+  const btn = document.getElementById('btnTheme');
+  if(btn) btn.textContent = theme === 'light' ? '☀️' : '🌙';
+  if(btn) btn.title = theme === 'light' ? 'Mudar para modo escuro' : 'Mudar para modo claro';
 }
 
 // Tool mounting with shell for copy shortcut + favorite toggle
@@ -319,6 +325,13 @@ function init(){
   document.getElementById('btnCloseSidebar').addEventListener('click', closeSidebar);
   document.getElementById('btnAbout').addEventListener('click', ()=> openModal('modalAbout'));
   document.getElementById('btnShortcuts').addEventListener('click', ()=> openModal('modalShortcuts'));
+  document.getElementById('btnTheme').addEventListener('click', ()=>{
+    const cur = Store.settings.get();
+    const nextTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    const next = Store.settings.set({ theme: nextTheme });
+    applySettings(next);
+    toast(nextTheme === 'light' ? 'Modo claro ativado' : 'Modo escuro ativado','success');
+  });
   // keyboard
   document.addEventListener('keydown', (e)=>{
     if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); globalSearch.focus(); }
