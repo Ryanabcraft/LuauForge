@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>LuauForge — Developer Toolkit for Lua & Luau</title>
+<meta name="description" content="LuauForge é um toolkit profissional para desenvolvedores Lua/Luau: loadstring generator, formatter, minifier, encoders, generators, inspector e snippet library. 100% client-side."/>
+<meta name="theme-color" content="#080A0F"/>
+<meta property="og:title" content="LuauForge — Developer Toolkit for Lua & Luau"/>
+<meta property="og:description" content="Ferramentas rápidas, bonitas e 100% no navegador para Lua/Luau. Formatter, Minifier, Generators, Inspector e muito mais."/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="assets/logo.svg"/>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/variables.css"/>
+<link rel="stylesheet" href="css/base.css"/>
+<link rel="stylesheet" href="css/components.css"/>
+<link rel="stylesheet" href="css/responsive.css"/>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar" aria-label="Sidebar">
+    <div class="sidebar__brand">
+      <div class="brand-mark">LF</div>
+      <div>
+        <div class="brand-name">LuauForge</div>
+        <div class="brand-sub">Lua & Luau Toolkit • v1.0</div>
+      </div>
+      <button class="btn btn--ghost btn--sm" id="btnCloseSidebar" style="margin-left:auto;display:none" aria-label="Fechar menu">✕</button>
+    </div>
+
+    <div class="sidebar__search">
+      <div class="search-wrap">
+        <span class="si" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20L16.5 16.5"/></svg></span>
+        <input id="globalSearch" placeholder="Buscar ferramenta… (Ctrl+K)" autocomplete="off" spellcheck="false"/>
+        <span class="search-kbd kbd">⌘K</span>
+      </div>
+    </div>
+
+    <nav class="sidebar__nav" id="sidebarNav"></nav>
+
+    <div class="sidebar__foot">
+      <div class="pill">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 10px rgba(34,197,94,.6)"></span>
+        <span><b>100% local</b> — nada sai do seu navegador</span>
+      </div>
+      <div class="row">
+        <a class="btn btn--sm" href="https://github.com" target="_blank" rel="noreferrer" style="flex:1">GitHub</a>
+        <button class="btn btn--sm btn--primary" id="btnOpenTools" style="flex:1">Open Tools</button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="overlay" id="overlay"></div>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="hamburger" id="btnHamburger" aria-label="Abrir menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg></button>
+      <div>
+        <div class="topbar__title" id="topbarTitle">Dashboard</div>
+        <div class="topbar__sub" id="topbarSub">Developer toolkit for Lua & Luau — fast, private, beautiful.</div>
+      </div>
+      <div class="topbar__actions">
+        <button class="btn btn--sm" id="btnShortcuts" title="Atalhos (?)">⌘ Shortcuts</button>
+        <button class="btn btn--sm" id="btnAbout">About</button>
+        <a class="btn btn--sm btn--primary" href="#/loadstring">+ New Loader</a>
+      </div>
+    </header>
+
+    <div class="content" id="app"></div>
+  </main>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite" aria-atomic="true"></div>
+
+<div class="modal" id="modalAbout" aria-hidden="true">
+  <div class="modal__backdrop" data-close="modalAbout"></div>
+  <div class="modal__card" role="dialog" aria-modal="true" aria-label="About">
+    <div class="modal__head">
+      <div>
+        <div style="font:800 14px var(--font-sans)">LuauForge</div>
+        <div class="small muted">Toolkit profissional para Lua/Luau • v1.0 • client-side only</div>
+      </div>
+      <button class="btn btn--sm" data-close="modalAbout">Fechar</button>
+    </div>
+    <div class="modal__body stack">
+      <div class="notice">All code processing is done locally in your browser. Nenhum código é enviado para servidores.</div>
+      <div class="grid grid--2">
+        <div class="card card__pad">
+          <div style="font:700 12px var(--font-sans)">Como usar</div>
+          <div class="small muted" style="margin-top:6px;line-height:1.7">Escolha uma ferramenta na sidebar, cole seu código ou URL, gere o resultado e copie. Use <span class="kbd">Ctrl</span> + <span class="kbd">K</span> para buscar.</div>
+        </div>
+        <div class="card card__pad">
+          <div style="font:700 12px var(--font-sans)">GitHub Pages</div>
+          <div class="small muted" style="margin-top:6px;line-height:1.7">Site 100% estático. Faça deploy via <b>Settings → Pages → Deploy from branch</b>. Hash routing evita 404.</div>
+        </div>
+      </div>
+      <div class="card card__pad">
+        <div style="font:700 12px var(--font-sans)">Privacidade</div>
+        <div class="small muted" style="margin-top:6px;line-height:1.7">Sem backend, sem analytics invasivo. Tudo roda com Web Crypto, parsers em JS e localStorage para preferências/favoritos.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modalShortcuts" aria-hidden="true">
+  <div class="modal__backdrop" data-close="modalShortcuts"></div>
+  <div class="modal__card" role="dialog" aria-modal="true" aria-label="Shortcuts">
+    <div class="modal__head">
+      <div style="font:800 14px var(--font-sans)">Keyboard Shortcuts</div>
+      <button class="btn btn--sm" data-close="modalShortcuts">Fechar</button>
+    </div>
+    <div class="modal__body">
+      <div class="list" style="border:1px solid var(--border);border-radius:12px;overflow:hidden">
+        <div class="list__item" style="justify-content:space-between"><span>Buscar ferramenta</span><span><span class="kbd">Ctrl</span> + <span class="kbd">K</span></span></div>
+        <div class="list__item" style="justify-content:space-between"><span>Executar / Generate</span><span><span class="kbd">Ctrl</span> + <span class="kbd">Enter</span></span></div>
+        <div class="list__item" style="justify-content:space-between"><span>Copiar output</span><span><span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">C</span></span></div>
+        <div class="list__item" style="justify-content:space-between"><span>Fechar modal/menu</span><span><span class="kbd">Esc</span></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

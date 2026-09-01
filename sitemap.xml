@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>./#/dashboard</loc></url>
+  <url><loc>./#/loadstring</loc></url>
+  <url><loc>./#/formatter</loc></url>
+  <url><loc>./#/minifier</loc></url>
+  <url><loc>./#/inspector</loc></url>
+  <url><loc>./#/snippets</loc></url>
+</urlset>
