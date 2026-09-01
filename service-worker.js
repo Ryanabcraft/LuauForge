@@ -1,9 +1,9 @@
-const CACHE='luauforge-v4';
+const CACHE='luauforge-v5';
 const ASSETS=[
   './','./index.html','./manifest.json',
   './css/variables.css','./css/base.css','./css/components.css','./css/responsive.css',
   './js/app.js','./js/router.js','./js/storage.js','./js/ui.js',
-  './js/tools/registry.js','./js/tools/snippets-data.js','./js/tools/loadstring.js','./js/tools/formatter.js','./js/tools/minifier.js','./js/tools/encoders.js','./js/tools/generators.js','./js/tools/inspector.js','./js/tools/snippets.js','./js/tools/pastefy.js',
+  './js/tools/registry.js','./js/tools/snippets-data.js','./js/tools/loadstring.js','./js/tools/formatter.js','./js/tools/minifier.js','./js/tools/encoders.js','./js/tools/generators.js','./js/tools/inspector.js','./js/tools/snippets.js','./js/tools/pastefy.js','./js/tools/obfuscator.js',
   './assets/logo.svg'
 ];
 self.addEventListener('install', e=>{
