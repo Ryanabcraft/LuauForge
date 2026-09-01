@@ -1,50 +1,114 @@
+/* LuauForge — Design Tokens — Forge Editorial System
+   Primitive → Semantic. OKLCH where supported, hex fallbacks.
+   Single accent: Forge (amber) — no purple gradients.
+*/
 :root{
-  --bg:#080A0F;
-  --bg2:#0E1118;
-  --card:#131722;
-  --card-hover:#181D2A;
-  --border:#242A38;
-  --border2:#2E3649;
-  --text:#F5F7FA;
-  --text2:#9CA6B5;
-  --text3:#6B7585;
-  --accent:#6C63FF;
-  --accent2:#3B82F6;
-  --accent-gradient: linear-gradient(135deg,#6C63FF 0%,#3B82F6 100%);
-  --accent-glow: 0 8px 24px rgba(108,99,255,.25);
-  --accent-glow2: 0 0 0 1px rgba(108,99,255,.3), 0 8px 24px rgba(108,99,255,.18);
-  --radius:14px;
-  --radius-sm:10px;
-  --radius-xs:8px;
-  --sidebar-w:270px;
-  --header-h:58px;
-  --success:#22C55E;
-  --warning:#F59E0B;
-  --danger:#EF4444;
-  --info:#3B82F6;
-  --font-sans: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  --shadow-card: 0 1px 0 rgba(255,255,255,.04) inset, 0 8px 24px rgba(0,0,0,.35);
-  --transition: 160ms ease;
+  /* Primitives (OKLCH) */
+  --primitive-paper: oklch(0.99 0.008 75);
+  --primitive-stone-50: oklch(0.97 0.006 75);
+  --primitive-stone-100: oklch(0.94 0.008 75);
+  --primitive-stone-200: oklch(0.90 0.011 75);
+  --primitive-stone-300: oklch(0.84 0.012 75);
+  --primitive-ink-900: oklch(0.19 0.02 260);
+  --primitive-ink-800: oklch(0.24 0.02 260);
+  --primitive-ink-700: oklch(0.30 0.02 260);
+  --primitive-forge-600: oklch(0.65 0.19 45);
+  --primitive-forge-700: oklch(0.60 0.19 45);
+
+  /* Semantic — Light (default) */
+  --bg: #F7F5F1;
+  --bg2: #FFFFFF;
+  --card: #FFFFFF;
+  --card-hover: #F1EEE9;
+  --border: #E8E3DC;
+  --border2: #D6D0C6;
+  --text: #1A1D21;
+  --text2: #6B7280;
+  --text3: #9AA0A8;
+  --text-inverse: #FFFFFF;
+
+  --accent: #E85D04;
+  --accent-ink: #FFFFFF;
+  --accent-hover: #D35400;
+  --accent-soft: rgba(232,93,4,.08);
+  --accent-ring: rgba(232,93,4,.16);
+  --accent-gradient: none;
+
+  --success: #15803D;
+  --warning: #B45309;
+  --danger: #B91C1C;
+  --info: #0E7490;
+
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-xs: 8px;
+  --radius-pill: 999px;
+
+  --sidebar-w: 280px;
+  --header-h: 64px;
+  --content-max: 1240px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+
+  --shadow-card: 0 1px 2px rgba(26,29,33,.06), 0 4px 16px rgba(26,29,33,.04);
+  --shadow-hover: 0 4px 20px rgba(26,29,33,.08);
+  --shadow-modal: 0 16px 48px rgba(26,29,33,.16);
+
+  --duration-fast: 140ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --ease-in-out: cubic-bezier(.65,0,.35,1);
+
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --transition: var(--duration-fast) var(--ease-out);
 }
-[data-accent="blue"]{ --accent:#3B82F6; --accent2:#06B6D4; --accent-gradient: linear-gradient(135deg,#3B82F6 0%,#06B6D4 100%);}
-[data-accent="purple"]{ --accent:#6C63FF; --accent2:#A855F7; --accent-gradient: linear-gradient(135deg,#6C63FF 0%,#A855F7 100%);}
-[data-accent="green"]{ --accent:#10B981; --accent2:#06B6D4; --accent-gradient: linear-gradient(135deg,#10B981 0%,#06B6D4 100%);}
-[data-accent="red"]{ --accent:#EF4444; --accent2:#F97316; --accent-gradient: linear-gradient(135deg,#EF4444 0%,#F97316 100%);}
-[data-theme="darker"]{ --bg:#05070A; --bg2:#0A0D14; --card:#10141E; --border:#1E2535; }
-[data-theme="light"]{
-  --bg:#F2F3F7;
-  --bg2:#FFFFFF;
-  --card:#FFFFFF;
-  --card-hover:#F8F9FC;
-  --border:#E2E6EF;
-  --border2:#D4DAE8;
-  --text:#0F172A;
-  --text2:#64748B;
-  --text3:#94A3B8;
-  --shadow-card: 0 1px 2px rgba(15,23,42,.06), 0 8px 24px rgba(15,23,42,.08);
+
+/* Dark — remap semantic only */
+[data-theme="dark"]{
+  --bg: #0E0F12;
+  --bg2: #17191D;
+  --card: #1A1D21;
+  --card-hover: #1F2328;
+  --border: #262A30;
+  --border2: #2E333B;
+  --text: #F0EDE8;
+  --text2: #9AA0A8;
+  --text3: #6B7280;
+  --text-inverse: #0E0F12;
+
+  --accent: #FF6B1A;
+  --accent-hover: #FF7A32;
+  --accent-soft: rgba(255,107,26,.10);
+  --accent-ring: rgba(255,107,26,.18);
+
+  --shadow-card: 0 1px 0 rgba(255,255,255,.04) inset, 0 8px 24px rgba(0,0,0,.28);
+  --shadow-hover: 0 8px 28px rgba(0,0,0,.36);
 }
-[data-theme="light"] .topbar{ background:rgba(255,255,255,.82); backdrop-filter:blur(14px) saturate(1.2); }
-[data-theme="light"] ::-webkit-scrollbar-track{ background:var(--bg); }
-[data-theme="light"] ::-webkit-scrollbar-thumb{ background:#CBD5E1; }
-[data-theme="light"] ::selection{ background:rgba(108,99,255,.18); }
+[data-theme="darker"]{
+  --bg: #08090B;
+  --bg2: #121417;
+  --card: #14171A;
+  --card-hover: #1A1E22;
+  --border: #1E2227;
+  --border2: #262B32;
+}
+
+/* Accent variants — keep but muted, no purple default */
+[data-accent="blue"]{ --accent:#0E7490; --accent-hover:#0C6580; --accent-soft:rgba(14,116,144,.08); --accent-ring:rgba(14,116,144,.16); }
+[data-accent="purple"]{ --accent:#7C3AED; --accent-hover:#6D28D9; --accent-soft:rgba(124,58,237,.08); --accent-ring:rgba(124,58,237,.14); }
+[data-accent="green"]{ --accent:#15803D; --accent-hover:#166534; --accent-soft:rgba(21,128,61,.08); --accent-ring:rgba(21,128,61,.14); }
+[data-accent="red"]{ --accent:#DC2626; --accent-hover:#B91C1C; --accent-soft:rgba(220,38,38,.08); --accent-ring:rgba(220,38,38,.14); }
+
+/* Legacy alias for JS */
+[data-accent="forge"]{ --accent:#E85D04; --accent-hover:#D35400; }

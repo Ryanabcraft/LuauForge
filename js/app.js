@@ -125,30 +125,36 @@ function viewDashboard(){
   const recent=Store.recent.all().map(id=> TOOL_MAP[id]).filter(Boolean).slice(0,4);
   const favs=Store.favs.all().map(id=> TOOL_MAP[id]).filter(Boolean);
   topTitle.textContent='Dashboard';
-  topSub.textContent='Developer toolkit for Lua & Luau — escolha uma ferramenta e comece a gerar.';
+  topSub.textContent='Escolha uma ferramenta e gere código em segundos.';
   app.innerHTML=`
   <div class="hero">
     <div class="hero__inner">
       <div>
-        <div class="badge" style="display:inline-flex;gap:6px;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:var(--success)"></span> v1.0 • ${TOOLS.length} ferramentas • 100% local</div>
-        <h1>LuauForge<br/><span style="background:var(--accent-gradient);-webkit-background-clip:text;background-clip:text;color:transparent">Developer Toolkit</span> for Lua & Luau</h1>
-        <p>Ferramentas rápidas e bonitas para loaders, formatação, minify, encoding, Color3/UDim2, inspector e snippets. Nada sai do seu navegador — ideal para GitHub Pages.</p>
+        <div class="hero__eyebrow"><i aria-hidden="true"></i> v1.0 • ${TOOLS.length} ferramentas • atalho Ctrl+K</div>
+        <h1>LuauForge<br/><em>Toolkit</em> para Lua & Luau</h1>
+        <p>Loaders, formatter, minifier, encoders, Color3/UDim2 e inspector. Tudo roda no seu navegador, sem backend — rápido no PC e no celular, com modo claro e escuro.</p>
         <div class="hero-actions">
-          <a class="btn btn--primary" href="#/loadstring">Open Tools →</a>
-          <a class="btn" href="#/snippets">Snippet Library</a>
-          <a class="btn btn--ghost" href="https://github.com" target="_blank" rel="noreferrer">★ GitHub</a>
+          <a class="btn btn--primary" href="#/loadstring">Começar agora →</a>
+          <a class="btn" href="#/formatter">Testar Formatter</a>
+          <a class="btn btn--ghost" href="https://github.com/Ryanabcraft/LuauForge" target="_blank" rel="noreferrer">GitHub</a>
         </div>
-        <div class="row" style="margin-top:12px">
-          <span class="badge">Dark mode</span><span class="badge">Hash routing</span><span class="badge">PWA ready</span><span class="badge">Mobile friendly</span>
+        <div class="row" style="margin-top:16px">
+          <span class="badge">Sem backend</span><span class="badge">Hash routing</span><span class="badge">PWA</span><span class="badge">Mobile 375px→1440px</span>
         </div>
       </div>
-      <div class="stats">
-        <div class="stat"><b>${TOOLS.length}</b><br/><span>Tools</span></div>
-        <div class="stat"><b>100%</b><br/><span>Client-side</span></div>
-        <div class="stat"><b>0</b><br/><span>Backend</span></div>
-        <div class="stat"><b>⚡</b><br/><span>Fast</span></div>
-        <div class="stat"><b>📱</b><br/><span>Responsive</span></div>
-        <div class="stat"><b>🔒</b><br/><span>Private</span></div>
+      <div class="hero__side">
+        <div class="hero__panel">
+          <div class="hero__panel-head"><b>Preview — Loadstring</b><span class="badge" style="margin-left:auto">copiar 1 clique</span></div>
+          <pre class="hero__code">loadstring(game:HttpGet(
+  "https://pastefy.app/abc/raw", true
+))()</pre>
+        </div>
+        <div class="stats">
+          <div class="stat stat--accent"><b>${TOOLS.length}</b><span>Ferramentas</span></div>
+          <div class="stat"><b>Ctrl+K</b><span>Busca rápida</span></div>
+          <div class="stat"><b>44px</b><span>Toque mínimo</span></div>
+        </div>
+        <div class="notice" style="margin:0">Dica: favorite ★ suas ferramentas e use <span class="kbd">Ctrl</span>+<span class="kbd">Enter</span> para gerar e <span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">C</span> para copiar.</div>
       </div>
     </div>
   </div>
@@ -195,10 +201,10 @@ function viewDashboard(){
 }
 function toolCardHtml(t){
   const isFav=Store.favs.has(t.id);
-  return `<div class="card tool-card" data-tool="${t.id}">
-    <div class="row" style="justify-content:space-between">
-      <div class="tool-icon">${iconSvg(t.id)}</div>
-      <button class="fav-btn ${isFav?'active':''}" data-fav="${t.id}" aria-label="Favorite">${isFav?'★':'☆'}</button>
+  return `<div class="card tool-card" data-tool="${t.id}" role="button" tabindex="0" aria-label="${t.name}">
+    <div class="tool-card__top">
+      <div class="tool-icon" aria-hidden="true">${iconSvg(t.id)}</div>
+      <button class="fav-btn ${isFav?'active':''}" data-fav="${t.id}" aria-label="${isFav?'Remover dos favoritos':'Favoritar'} ${t.name}">${isFav?'★':'☆'}</button>
     </div>
     <div class="tool-name">${t.name}</div>
     <div class="tool-desc">${t.desc}</div>
@@ -208,20 +214,20 @@ function toolCardHtml(t){
 
 function viewSettings(){
   topTitle.textContent='Settings';
-  topSub.textContent='Preferências salvas em localStorage.';
+  topSub.textContent='Preferências salvas no seu navegador.';
   const s=Store.settings.get();
   app.innerHTML=`
   <div class="grid grid--2">
-    <div class="panel"><div class="panel__head"><span class="card__title">Appearance</span></div><div class="panel__body stack">
-      <label class="field"><span>Theme</span><select id="setTheme" class="select"><option value="dark">Dark</option><option value="darker">Darker</option><option value="light">Light</option></select></label>
-      <label class="field"><span>Accent</span><select id="setAccent" class="select"><option value="purple">Purple</option><option value="blue">Blue</option><option value="green">Green</option><option value="red">Red</option></select></label>
-      <label class="field"><span>Editor font size</span><input id="setFont" type="range" min="11" max="18" value="${s.fontSize}" class="range"/><span class="small muted" id="setFontVal">${s.fontSize}px</span></label>
-      <label class="field"><span>Tab size</span><select id="setTab" class="select"><option value="2">2</option><option value="4">4</option></select></label>
-      <div class="row"><button class="btn btn--primary" id="setSave">Save</button><button class="btn btn--sm" id="setReset">Reset</button></div>
+    <div class="panel"><div class="panel__head"><span class="card__title">Aparência</span><span class="badge" style="margin-left:auto">claro / escuro</span></div><div class="panel__body stack">
+      <label class="field"><span>Tema</span><select id="setTheme" class="select"><option value="light">Claro</option><option value="dark">Escuro</option><option value="darker">Escuro+</option></select></label>
+      <label class="field"><span>Cor de destaque</span><select id="setAccent" class="select"><option value="forge">Forge (laranja)</option><option value="blue">Blue</option><option value="green">Green</option><option value="red">Red</option><option value="purple">Purple</option></select></label>
+      <label class="field"><span>Tamanho da fonte (editor)</span><input id="setFont" type="range" min="11" max="18" value="${s.fontSize}" class="range"/><span class="small muted" id="setFontVal">${s.fontSize}px</span></label>
+      <label class="field"><span>Tab size</span><select id="setTab" class="select"><option value="2">2 espaços</option><option value="4">4 espaços</option></select></label>
+      <div class="row"><button class="btn btn--primary" id="setSave">Salvar</button><button class="btn btn--sm" id="setReset">Restaurar padrão</button></div>
     </div></div>
-    <div class="panel"><div class="panel__head"><span class="card__title">Info</span></div><div class="panel__body stack">
-      <div class="notice">Tema e preferências ficam salvos no seu navegador. Use o botão 🌙/☀️ na topbar para alternar rápido.</div>
-      <div class="card card__pad"><div style="font:700 12px var(--font-sans)">Storage</div><div class="small muted" id="storageInfo" style="margin-top:6px"></div><div class="row" style="margin-top:10px"><button class="btn btn--sm" id="clearFavs">Clear favorites</button><button class="btn btn--sm" id="clearRecent">Clear recent</button></div></div>
+    <div class="panel"><div class="panel__head"><span class="card__title">Sobre & Armazenamento</span></div><div class="panel__body stack">
+      <div class="notice">Tudo roda localmente. Use o botão <b>🌙/☀️</b> na barra superior para alternar claro/escuro sem recarregar.</div>
+      <div class="card card__pad" style="background:var(--bg)"><div style="font:700 12px var(--font-display)">Armazenamento</div><div class="small muted" id="storageInfo" style="margin-top:6px"></div><div class="row" style="margin-top:12px"><button class="btn btn--sm" id="clearFavs">Limpar favoritos</button><button class="btn btn--sm" id="clearRecent">Limpar recentes</button></div></div>
     </div></div>
   </div>`;
   const theme=app.querySelector('#setTheme'), accent=app.querySelector('#setAccent'), font=app.querySelector('#setFont'), fontVal=app.querySelector('#setFontVal'), tab=app.querySelector('#setTab');

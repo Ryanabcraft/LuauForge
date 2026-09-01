@@ -26,7 +26,7 @@ export const Store = {
   },
   settings: {
     key: 'lf:settings',
-    defaults: { accent:'purple', theme:'dark', fontSize:13, tabSize:4 },
+    defaults: { accent:'forge', theme:'dark', fontSize:13, tabSize:4 },
     get(){
       const s = LS.get(this.key, {});
       return { ...this.defaults, ...s };
