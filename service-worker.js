@@ -1,4 +1,4 @@
-const CACHE='luauforge-v5';
+const CACHE='luauforge-v6';
 const ASSETS=[
   './','./index.html','./manifest.json',
   './css/variables.css','./css/base.css','./css/components.css','./css/responsive.css',
