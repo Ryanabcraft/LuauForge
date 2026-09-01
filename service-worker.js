@@ -1,9 +1,13 @@
-const CACHE='luauforge-v6';
+const CACHE='luauforge-v7';
 const ASSETS=[
   './','./index.html','./manifest.json',
   './css/variables.css','./css/base.css','./css/components.css','./css/responsive.css',
   './js/app.js','./js/router.js','./js/storage.js','./js/ui.js',
   './js/tools/registry.js','./js/tools/snippets-data.js','./js/tools/loadstring.js','./js/tools/formatter.js','./js/tools/minifier.js','./js/tools/encoders.js','./js/tools/generators.js','./js/tools/inspector.js','./js/tools/snippets.js','./js/tools/pastefy.js','./js/tools/obfuscator.js',
+  './js/obfuscator/tokenizer.js','./js/obfuscator/parser.js','./js/obfuscator/generator.js','./js/obfuscator/random.js','./js/obfuscator/scope.js','./js/obfuscator/pipeline.js',
+  './js/obfuscator/transforms/identifiers.js','./js/obfuscator/transforms/strings.js','./js/obfuscator/transforms/numbers.js','./js/obfuscator/transforms/booleans.js','./js/obfuscator/transforms/constants.js','./js/obfuscator/transforms/controlflow.js','./js/obfuscator/transforms/predicates.js','./js/obfuscator/transforms/deadcode.js','./js/obfuscator/transforms/indirection.js','./js/obfuscator/transforms/vm.js',
+  './workers/obfuscator.worker.js',
+  './tests/tests.html',
   './assets/logo.svg'
 ];
 self.addEventListener('install', e=>{

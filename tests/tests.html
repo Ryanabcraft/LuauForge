@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>LuauForge — Tests</title>
+<link rel="stylesheet" href="../css/variables.css"/>
+<link rel="stylesheet" href="../css/base.css"/>
+<style>
+body{padding:24px;max-width:900px;margin:0 auto}
+.test{border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0;background:var(--card)}
+.pass{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.06)}
+.fail{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.06)}
+pre{white-space:pre-wrap;word-break:break-all;background:var(--bg);padding:12px;border-radius:8px;overflow:auto}
+</style>
+</head>
+<body>
+<h1>LuauForge Obfuscator Tests</h1>
+<div id="results"></div>
+<script type="module">
+import { parse } from '../js/obfuscator/parser.js';
+import { generate } from '../js/obfuscator/generator.js';
+import { obfuscate, PRESETS } from '../js/obfuscator/pipeline.js';
+
+const tests=[
+  { name:'print hello', code:`print("Hello")` },
+  { name:'locals add', code:`local a = 10\nlocal b = 20\nprint(a + b)` },
+  { name:'for loop', code:`for i = 1, 10 do\n    print(i)\nend` },
+  { name:'function test', code:`local function test(a, b)\n    if a > b then\n        return a\n    else\n        return b\n    end\nend` },
+  { name:'Players LocalPlayer', code:`local Players = game:GetService("Players")\nlocal player = Players.LocalPlayer\nprint(player.Name)` },
+  { name:'nested closures', code:`local function outer(x)\n    local function inner(y)\n        return x + y\n    end\n    return inner\nend` },
+  { name:'tables', code:`local t = { a=1, b=2, [\"x\"]=3 }\nprint(t.a)` },
+  { name:'varargs', code:`local function v(...) print(...) end` },
+  { name:'while repeat', code:`local i=0\nwhile i<5 do i=i+1 end\nrepeat i=i-1 until i==0` },
+  { name:'methods callbacks', code:`obj:Connect(function() print("hi") end)` },
+  { name:'utf8', code:`print("Olá 🌟 Luau")` },
+  { name:'leak test', code:`local secret = "VERY_UNIQUE_SECRET_928374"\nprint(secret)`, checkLeak:true, secret:"VERY_UNIQUE_SECRET_928374" },
+  { name:'scope value', code:`local value = 10\nfunction test()\n    local value = 20\n    print(value)\nend\nprint(value)` },
+];
+
+const results=document.getElementById('results');
+let passed=0, failed=0;
+
+for(const t of tests){
+  const div=document.createElement('div');
+  div.className='test';
+  try{
+    // parse original
+    const ast=parse(t.code);
+    const gen=generate(ast);
+    // obfuscate normal
+    const res=obfuscate(t.code, { preset:'Normal', seed:'test123' });
+    const out=res.code;
+    // validate leak
+    if(t.checkLeak){
+      if(out.includes(t.secret)){
+        throw new Error(`LEAK: plaintext "${t.secret}" found in output`);
+      }
+    }
+    // validate output parses
+    parse(out);
+    // determinism check: mesma seed deve gerar mesmo output
+    const res2=obfuscate(t.code, { preset:'Normal', seed:'test123' });
+    if(res.code!==res2.code) throw new Error('Não determinístico com mesma seed');
+
+    // scope test: value renomeado mas scopes diferentes
+    if(t.name==='scope value'){
+      if(out.includes('value')) throw new Error('Rename falhou: "value" ainda presente (deveria renomear locals)');
+      // mas deve preservar game.Players se existisse - este teste não tem, ok
+    }
+
+    div.classList.add('pass');
+    div.innerHTML=`<b>✓ ${t.name}</b><div class="small muted">${out.length} chars • ${res.timeMs.toFixed(1)}ms</div><pre>${out.slice(0,1200).replace(/</g,'&lt;')}</pre>`;
+    passed++;
+  }catch(e){
+    div.classList.add('fail');
+    div.innerHTML=`<b>✗ ${t.name}</b><div style="color:var(--danger)">${e.message}</div><pre>${e.stack||''}</pre>`;
+    failed++;
+  }
+  results.appendChild(div);
+}
+const summary=document.createElement('div');
+summary.style.marginTop='16px';
+summary.innerHTML=`<b>${passed} passed, ${failed} failed de ${tests.length}</b>`;
+results.prepend(summary);
+</script>
+</body>
+</html>
